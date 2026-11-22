@@ -1,0 +1,866 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090909">
+<title>NOIR — The Signature</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Lao:wght@400;500;600;700&display=swap');
+
+:root {
+  --gold: #d8b66b;
+  --gold2: #f0dca7;
+  --ink: #090909;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: #f6f2e9;
+  font-family: "DM Sans", "Noto Sans Lao", sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header {
+  width: min(1180px, calc(100% - 52px));
+  height: 86px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.11);
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .38em;
+  color: var(--gold2);
+}
+
+.logo small {
+  display: block;
+  font-size: 8px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+nav {
+  display: flex;
+  gap: 34px;
+  font-size: 10px;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  color: #c6c0b6;
+}
+
+nav a:hover {
+  color: var(--gold2);
+}
+
+.lang {
+  display: flex;
+  gap: 4px;
+  border: 1px solid rgba(216,182,107,.3);
+  padding: 4px;
+}
+
+.lang button {
+  background: transparent;
+  border: 0;
+  color: #aaa;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.lang button.active {
+  background: var(--gold);
+  color: #111;
+}
+
+.hero {
+  width: min(1180px, calc(100% - 52px));
+  min-height: 680px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 28px;
+  padding: 42px 0 65px;
+}
+
+.copy {
+  animation: rise .9s ease both;
+}
+
+.kicker {
+  font-size: 10px;
+  letter-spacing: .32em;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kicker:before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+h1 {
+  font-size: clamp(54px, 7.2vw, 94px);
+  line-height: .93;
+  letter-spacing: -.065em;
+  font-weight: 500;
+  margin: 27px 0 20px;
+}
+
+h1 span {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gold);
+}
+
+.subtitle {
+  font-size: 12px;
+  letter-spacing: .24em;
+  color: var(--gold2);
+  text-transform: uppercase;
+}
+
+.description {
+  max-width: 440px;
+  color: #b8b2a8;
+  font-family: "Noto Sans Lao", sans-serif;
+  font-size: 14px;
+  line-height: 2.05;
+  margin-top: 25px;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+
+.gold-button {
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #12110d;
+  padding: 15px 22px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.gold-button:hover {
+  background: transparent;
+  color: var(--gold2);
+  transform: translateY(-3px);
+}
+
+.text-link {
+  font-size: 10px;
+  color: #c4bfb5;
+  border-bottom: 1px solid #777;
+  padding-bottom: 5px;
+}
+
+.visual {
+  height: 590px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  isolation: isolate;
+}
+
+.halo {
+  position: absolute;
+  width: min(470px, 90%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(216,182,107,.17);
+  box-shadow: 0 0 100px rgba(216,182,107,.08);
+  animation: pulse 5s ease-in-out infinite;
+}
+
+.halo:before,
+.halo:after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgba(216,182,107,.1);
+  border-radius: 50%;
+}
+
+.halo:after {
+  inset: 17%;
+}
+
+.product-frame {
+  height: 555px;
+  width: min(390px, 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  cursor: zoom-in;
+  touch-action: pan-y;
+}
+
+.product-image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  transform: translate(0px, 0px) scale(1);
+  transition: transform .22s ease;
+  filter: drop-shadow(0 25px 35px rgba(0,0,0,.65));
+  user-select: none;
+}
+
+.zoom-tools {
+  position: absolute;
+  right: 0;
+  bottom: 28px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+  background: rgba(12,12,12,.82);
+  border: 1px solid rgba(216,182,107,.22);
+}
+
+.zoom-tools button {
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.13);
+  color: var(--gold2);
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.zoom-tools button:hover {
+  background: var(--gold);
+  color: #111;
+}
+
+#zoomLevel {
+  min-width: 42px;
+  text-align: center;
+  font-size: 10px;
+  color: #d6c69f;
+}
+
+.zoom-hint {
+  position: absolute;
+  left: 8px;
+  bottom: 40px;
+  color: #7f7a70;
+  font-size: 9px;
+}
+
+.scroll-mark {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #827b6d;
+  font-size: 9px;
+  letter-spacing: .2em;
+}
+
+.section {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 95px 26px;
+}
+
+.inner {
+  width: min(1000px, 100%);
+  margin: auto;
+}
+
+.section-label {
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: .3em;
+}
+
+.section h2 {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 400;
+  margin: 18px 0;
+}
+
+.section p {
+  color: #aaa49a;
+  font-family: "Noto Sans Lao", sans-serif;
+  line-height: 2;
+  max-width: 680px;
+  font-size: 14px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 42px;
+}
+
+.feature {
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 25px;
+  min-height: 155px;
+  transition: .3s;
+}
+
+.feature:hover {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+}
+
+.feature b {
+  display: block;
+  color: var(--gold2);
+  font-size: 12px;
+  margin-bottom: 13px;
+}
+
+.feature span {
+  font-family: "Noto Sans Lao", sans-serif;
+  color: #aaa49a;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.note {
+  margin-top: 28px;
+  color: #736e65;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+footer {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 28px;
+  width: min(1180px, calc(100% - 52px));
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #777168;
+  font-size: 9px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  background: rgba(0,0,0,.94);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal img {
+  max-width: min(85vw, 650px);
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.close-modal {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  background: none;
+  border: 1px solid rgba(216,182,107,.3);
+  color: var(--gold2);
+  font-size: 25px;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(.98);
+    opacity: .7;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+}
+
+@media(max-width:760px) {
+  header {
+    width: calc(100% - 34px);
+    height: 72px;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .hero {
+    width: calc(100% - 38px);
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-top: 56px;
+  }
+
+  .copy {
+    order: 1;
+  }
+
+  .visual {
+    order: 0;
+    height: 490px;
+    margin-bottom: 18px;
+  }
+
+  .product-frame {
+    height: 470px;
+    width: min(330px, 82%);
+  }
+
+  .zoom-tools {
+    right: 2%;
+    bottom: 10px;
+  }
+
+  .zoom-hint {
+    bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(55px, 15vw, 78px);
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 70px 22px;
+  }
+
+  footer {
+    width: calc(100% - 38px);
+    flex-direction: column;
+  }
+
+  .scroll-mark {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="#">
+    NOIR
+    <small>THE ART OF PRESENCE</small>
+  </a>
+
+  <nav>
+    <a href="#story" data-en="The story" data-lo="ເລື່ອງລາວ">The story</a>
+    <a href="#design" data-en="The design" data-lo="ການອອກແບບ">The design</a>
+  </nav>
+
+  <div class="lang">
+    <button id="enBtn" class="active" type="button">EN</button>
+    <button id="loBtn" type="button">LA</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+
+  <div class="copy">
+
+    <div class="kicker"
+      data-en="A statement in black"
+      data-lo="ຄວາມໂດດເດັ່ນໃນສີດຳ">
+      A statement in black
+    </div>
+
+    <h1>
+      THE
+      <span>BLACK</span>
+      ICON.
+    </h1>
+
+    <div class="subtitle"
+      data-en="Bold by design. Distinct by nature."
+      data-lo="ໂດດເດັ່ນດ້ວຍດີໄຊ • ມີເອກະລັກ">
+      Bold by design. Distinct by nature.
+    </div>
+
+    <p class="description"
+      data-en="A striking silhouette dressed in deep black, finished with luminous gold. A design made to stand out through confidence, character and timeless style."
+      data-lo="ຮູບຊົງທີ່ໂດດເດັ່ນໃນສີດຳເຂັ້ມ ຕັດກັບລາຍລະອຽດສີຄຳທີ່ເຫຼື້ອມງາມ. ການອອກແບບທີ່ສະທ້ອນຄວາມໝັ້ນໃຈ ມີສະເໜ່ ແລະ ມີສະໄຕລ໌ເໜືອການເວລາ.">
+      A striking silhouette dressed in deep black, finished with luminous gold. A design made to stand out through confidence, character and timeless style.
+    </p>
+
+    <div class="actions">
+      <a class="gold-button" href="#design"
+        data-en="Discover the design"
+        data-lo="ຄົ້ນພົບດີໄຊ">
+        Discover the design
+      </a>
+
+      <a class="text-link" href="#story"
+        data-en="Explore more"
+        data-lo="ເບິ່ງເພີ່ມເຕີມ">
+        Explore more
+      </a>
+    </div>
+
+  </div>
+
+  <div class="visual">
+
+    <div class="halo"></div>
+
+    <div class="product-frame" id="productFrame">
+      <img
+        class="product-image"
+        id="productImage"
+        src="perfume.png"
+        alt="Black and gold perfume bottle">
+    </div>
+
+    <div class="zoom-hint"
+      data-en="Scroll or use + / − to zoom"
+      data-lo="ເລື່ອນເມົາ ຫຼື ກົດ + / − ເພື່ອຊູມ">
+      Scroll or use + / − to zoom
+    </div>
+
+    <div class="zoom-tools">
+      <button type="button" id="zoomOut">−</button>
+      <span id="zoomLevel">100%</span>
+      <button type="button" id="zoomIn">+</button>
+      <button type="button" id="zoomReset">↺</button>
+      <button type="button" id="openImage">⤢</button>
+    </div>
+
+  </div>
+
+  <div class="scroll-mark"
+    data-en="SCROLL TO DISCOVER"
+    data-lo="ເລື່ອນລົງເພື່ອຄົ້ນພົບ">
+    SCROLL TO DISCOVER
+  </div>
+
+</section>
+
+<section class="section" id="story">
+
+  <div class="inner">
+
+    <div class="section-label"
+      data-en="01 — The impression"
+      data-lo="01 — ຄວາມປະທັບໃຈ">
+      01 — The impression
+    </div>
+
+    <h2
+      data-en="Presence without saying a word."
+      data-lo="ສະທ້ອນຕົວຕົນ ໂດຍບໍ່ຕ້ອງເວົ້າ.">
+      Presence without saying a word.
+    </h2>
+
+    <p
+      data-en="The contrast of dark surfaces and golden details creates a confident, refined look. Every curve and stripe contributes to a bottle design that feels instantly recognizable."
+      data-lo="ຄວາມຕ່າງລະຫວ່າງພື້ນຜິວສີດຳ ແລະ ລາຍລະອຽດສີຄຳ ສ້າງຄວາມຮູ້ສຶກທີ່ໝັ້ນໃຈ ແລະ ຫຼູຫຼາ. ທຸກໆສ່ວນໂຄ້ງ ແລະ ເສັ້ນລາຍ ຊ່ວຍໃຫ້ຂວດນ້ຳຫອມນີ້ມີເອກະລັກ.">
+      The contrast of dark surfaces and golden details creates a confident, refined look.
+    </p>
+
+  </div>
+
+</section>
+
+<section class="section" id="design">
+
+  <div class="inner">
+
+    <div class="section-label"
+      data-en="02 — Design details"
+      data-lo="02 — ລາຍລະອຽດການອອກແບບ">
+      02 — Design details
+    </div>
+
+    <h2
+      data-en="A closer look."
+      data-lo="ເບິ່ງໃກ້ໆ.">
+      A closer look.
+    </h2>
+
+    <p
+      data-en="A sculpted silhouette, graphic horizontal bands and a polished gold-tone spray top give this bottle its distinctive visual identity."
+      data-lo="ຮູບຊົງທີ່ມີມິຕິ ລາຍເສັ້ນແນວນອນ ແລະ ຝາຫົວສີຄຳເຫຼື້ອມ ເຮັດໃຫ້ຂວດນີ້ມີຮູບລັກສະເພາະຕົວ.">
+      A sculpted silhouette, graphic horizontal bands and a polished gold-tone spray top give this bottle its distinctive visual identity.
+    </p>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <b data-en="01 / DEEP BLACK" data-lo="01 / ສີດຳເຂັ້ມ">
+          01 / DEEP BLACK
+        </b>
+        <span
+          data-en="A dark, sleek finish with a modern presence."
+          data-lo="ພື້ນຜິວສີດຳທີ່ດູທັນສະໄໝ ແລະ ມີສະເໜ່.">
+          A dark, sleek finish with a modern presence.
+        </span>
+      </div>
+
+      <div class="feature">
+        <b data-en="02 / GOLD ACCENT" data-lo="02 / ລາຍລະອຽດສີຄຳ">
+          02 / GOLD ACCENT
+        </b>
+        <span
+          data-en="A polished gold-tone top adds a refined contrast."
+          data-lo="ຫົວສີຄຳເຫຼື້ອມ ເພີ່ມຄວາມຫຼູຫຼາໃຫ້ກັບຮູບຊົງ.">
+          A polished gold-tone top adds a refined contrast.
+        </span>
+      </div>
+
+      <div class="feature">
+        <b data-en="03 / SCULPTED FORM" data-lo="03 / ຮູບຊົງມີມິຕິ">
+          03 / SCULPTED FORM
+        </b>
+        <span
+          data-en="Signature curves and bands create a bold silhouette."
+          data-lo="ສ່ວນໂຄ້ງ ແລະ ລາຍເສັ້ນ ສ້າງຮູບຊົງທີ່ໂດດເດັ່ນ.">
+          Signature curves and bands create a bold silhouette.
+        </span>
+      </div>
+
+    </div>
+
+    <div class="note"
+      data-en="Product identity, fragrance notes, size and price have not been specified. Add verified product information here before publishing."
+      data-lo="ຍັງບໍ່ມີຂໍ້ມູນຢືນຢັນກ່ຽວກັບຊື່ສິນຄ້າ ກິ່ນນ້ຳຫອມ ຂະໜາດ ແລະ ລາຄາ. ກະລຸນາເພີ່ມຂໍ້ມູນຈິງກ່ອນເຜີຍແຜ່.">
+      Product identity, fragrance notes, size and price have not been specified.
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  <span>NOIR — THE SIGNATURE</span>
+  <span data-en="A study in black & gold"
+    data-lo="ຄວາມລົງຕົວຂອງສີດຳ ແລະ ສີຄຳ">
+    A study in black & gold
+  </span>
+  <span>© 2026</span>
+</footer>
+
+<div class="modal" id="imageModal">
+  <button class="close-modal" id="closeModal">×</button>
+  <img src="perfume.png" alt="Large perfume bottle">
+</div>
+
+<script>
+
+// IMAGE ZOOM
+const image = document.getElementById('productImage');
+const frame = document.getElementById('productFrame');
+const zoomLabel = document.getElementById('zoomLevel');
+
+let scale = 1;
+let x = 0;
+let y = 0;
+
+const minScale = 1;
+const maxScale = 2.5;
+
+function renderZoom() {
+  image.style.transform =
+    `translate(${x}px, ${y}px) scale(${scale})`;
+
+  zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+
+  frame.style.cursor =
+    scale > 1 ? 'grab' : 'zoom-in';
+}
+
+function zoomBy(amount) {
+  scale = Math.min(
+    maxScale,
+    Math.max(minScale, +(scale + amount).toFixed(2))
+  );
+
+  if (scale === 1) {
+    x = 0;
+    y = 0;
+  }
+
+  renderZoom();
+}
+
+document.getElementById('zoomIn')
+  .addEventListener('click', () => zoomBy(.25));
+
+document.getElementById('zoomOut')
+  .addEventListener('click', () => zoomBy(-.25));
+
+document.getElementById('zoomReset')
+  .addEventListener('click', () => {
+    scale = 1;
+    x = 0;
+    y = 0;
+    renderZoom();
+  });
+
+// Mouse wheel zoom
+frame.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoomBy(e.deltaY < 0 ? .12 : -.12);
+}, { passive: false });
+
+// Double click to zoom
+frame.addEventListener('dblclick', () => {
+  if (scale === 1) {
+    zoomBy(.75);
+  } else {
+    scale = 1;
+    x = 0;
+    y = 0;
+    renderZoom();
+  }
+});
+
+// Drag image when zoomed
+let dragging = false;
+let startX = 0;
+let startY = 0;
+let baseX = 0;
+let baseY = 0;
+
+frame.addEventListener('pointerdown', e => {
+  if (scale === 1) return;
+
+  dragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  baseX = x;
+  baseY = y;
+
+  frame.setPointerCapture(e.pointerId);
+});
+
+frame.addEventListener('pointermove', e => {
+  if (!dragging) return;
+
+  x = baseX + (e.clientX - startX);
+  y = baseY + (e.clientY - startY);
+
+  renderZoom();
+});
+
+frame.addEventListener('pointerup', () => {
+  dragging = false;
+  renderZoom();
+});
+
+// IMAGE FULLSCREEN
+const modal = document.getElementById('imageModal');
+
+document.getElementById('openImage')
+  .addEventListener('click', () => {
+    modal.classList.add('open');
+  });
+
+document.getElementById('closeModal')
+  .addEventListener('click', () => {
+    modal.classList.remove('open');
+  });
+
+modal.addEventListener('click', e => {
+  if (e.target === modal) {
+    modal.classList.remove('open');
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    modal.classList.remove('open');
+  }
+});
+
+// LANGUAGE SWITCH
+const enBtn = document.getElementById('enBtn');
+const loBtn = document.getElementById('loBtn');
+
+function setLanguage(language) {
+
+  document.documentElement.lang =
+    language === 'lo' ? 'lo' : 'en';
+
+  document.querySelectorAll('[data-en]')
+    .forEach(element => {
+      element.textContent =
+        element.dataset[language];
+    });
+
+  enBtn.classList.toggle('active', language === 'en');
+  loBtn.classList.toggle('active', language === 'lo');
+}
+
+enBtn.addEventListener('click', () => setLanguage('en'));
+loBtn.addEventListener('click', () => setLanguage('lo'));
+
+renderZoom();
+
+</script>
+
+</body>
+</html>
